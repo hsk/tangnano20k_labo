@@ -1,0 +1,21 @@
+IO_LOC "I_clk27" 4;
+IO_PORT "I_clk27" IO_TYPE=LVCMOS33 PULL_MODE=NONE;
+
+IO_LOC "I_reset" 87;
+IO_PORT "I_reset" PULL_MODE=NONE;
+IO_LOC "I_play_audio" 88;
+IO_PORT "I_play_audio" PULL_MODE=NONE;
+
+// HDMI
+IO_LOC "tmds_clk_p" 33,34;
+IO_PORT "tmds_clk_p" PULL_MODE=NONE DRIVE=8;
+IO_LOC "tmds_d_p[0]" 35,36;
+IO_PORT "tmds_d_p[0]" PULL_MODE=NONE DRIVE=8;
+IO_LOC "tmds_d_p[1]" 37,38;
+IO_PORT "tmds_d_p[1]" PULL_MODE=NONE DRIVE=8;
+IO_LOC "tmds_d_p[2]" 39,40;
+IO_PORT "tmds_d_p[2]" PULL_MODE=NONE DRIVE=8;
+
+// serial
+IO_LOC "rxd" 70;
+IO_PORT "rxd" IO_TYPE=LVCMOS33;
