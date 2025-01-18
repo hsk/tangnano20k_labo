@@ -2,8 +2,9 @@
 
 本当は入門記事的にリポジトリを作りたいんですが、取り止めもなく色々作ってるものを置く場所が欲しくなったので、置いておきます。
 
-- [led](led)
-- [bg1](bg1)
-- [bg2_uart_rx](bg2_uart_rx)
-- [bg3_uart_cobs](bg3_uart_cobs)
-- [sp](sp)
+- [led](led) Lチカ。 LED を点滅させる
+- [bg1](bg1) テキストを表示して変える
+- [bg2_uart_rx](bg2_uart_rx) テキストを表示して UART で操作する
+- [bg3_uart_cobs](bg3_uart_cobs) テキストを表示して UART で COBS エンコーディングで操作する
+- [sp](sp) スプライト1個表示する
+- [sp1](sp1) スプライトが128個表示する (ラインの制限はなし)
