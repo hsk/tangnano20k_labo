@@ -8,3 +8,5 @@
 - [bg3_uart_cobs](bg3_uart_cobs) テキストを表示して UART で COBS エンコーディングで操作する
 - [sp](sp) スプライト1個表示する
 - [sp1](sp1) スプライトが128個表示する (ラインの制限はなし)
+- [ym2149](ym2149) HDMIでPSG音源1音鳴らす
+- [ym2149_3op](ym2149_3op) HDMIでPSG音源3音鳴らす
