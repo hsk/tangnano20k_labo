@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Fri Nov 29 04:06:48 2024
+[*]
+[dumpfile] "sim.vcd.fst"
+[dumpfile_mtime] "Fri Nov 29 04:05:39 2024"
+[dumpfile_size] 345122479
+[optimize_vcd]
+[savefile] "setting.gtkw"
+[timestart] 0
+[size] 1288 600
+[pos] -1 -1
+*-33.932400 66550000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] sim_top.
+[sst_width] 253
+[signals_width] 183
+[sst_expanded] 1
+[sst_vpaned_height] 159
+@22
+sim_top.hdmi.frameHeight[9:0]
+sim_top.hdmi.frameWidth[9:0]
+@8023
+sim_top.hdmi.pixX[9:0]
+sim_top.hdmi.pixY[9:0]
+[pattern_trace] 1
+[pattern_trace] 0
