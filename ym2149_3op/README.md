@@ -5,6 +5,6 @@
 
 3音の和音を出せてます。
 
+https://github.com/user-attachments/assets/55fe774a-7fac-48b3-a592-44884f2f7c72
+
 TODO: もうちょっとまともにドキュメントを書く。<絶対放置なやつだなコレw
-
-
