@@ -1,0 +1,212 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sat Dec 14 09:40:36 2024
+[*]
+[dumpfile] "/Users/hiroshisakurai/Documents/Gowin_V1.9.9.03_Education_linux/vhdl/hdmi_audio/sim/sim.vcd"
+[dumpfile_mtime] "Sat Dec 14 09:40:13 2024"
+[dumpfile_size] 36996629
+[savefile] "/Users/hiroshisakurai/Documents/Gowin_V1.9.9.03_Education_linux/vhdl/hdmi_audio/sim/setting.gtkw"
+[timestart] 4120000
+[size] 1712 1040
+[pos] -1 -1
+*-22.126171 131400000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[markername] AA
+[markername] BB
+[markername] CC
+[markername] DD
+[markername] EE
+[markername] FF
+[markername] GG
+[markername] HH
+[markername] II
+[markername] JJ
+[markername] KK
+[markername] LL
+[markername] MM
+[markername] NN
+[markername] OO
+[markername] PP
+[markername] QQ
+[markername] RR
+[markername] SS
+[markername] TT
+[markername] UU
+[markername] VV
+[markername] WW
+[markername] XX
+[markername] YY
+[markername] ZZ
+[treeopen] sim_top.
+[treeopen] sim_top.uut.
+[treeopen] sim_top.uut.audio.
+[sst_width] 253
+[signals_width] 493
+[sst_expanded] 1
+[sst_vpaned_height] 313
+@28
+sim_top.uut.clk_27MHz
+sim_top.uut.audio.clk_3_58MHz
+sim_top.uut.clk_48kHz
+@22
+sim_top.uut.sample[15:0]
+sim_top.uut.audio.CHANNEL_A[7:0]
+sim_top.uut.audio.psg.cnt_div[3:0]
+@28
+sim_top.uut.audio.psg.ena_div
+@22
+[color] 3
+sim_top.uut.audio.psg.A[5:0]
+@29
+sim_top.uut.audio.psg.tone_gen_op[3:1]
+@28
+sim_top.uut.audio.BC
+sim_top.uut.audio.BDIR
+@22
+sim_top.uut.audio.state[3:0]
+sim_top.uut.audio.ym2149_audio[15:0]
+@c00022
+sim_top.uut.audio.psg.ymreg[127:0]
+@28
+(0)sim_top.uut.audio.psg.ymreg[127:0]
+(1)sim_top.uut.audio.psg.ymreg[127:0]
+(2)sim_top.uut.audio.psg.ymreg[127:0]
+(3)sim_top.uut.audio.psg.ymreg[127:0]
+(4)sim_top.uut.audio.psg.ymreg[127:0]
+(5)sim_top.uut.audio.psg.ymreg[127:0]
+(6)sim_top.uut.audio.psg.ymreg[127:0]
+(7)sim_top.uut.audio.psg.ymreg[127:0]
+(8)sim_top.uut.audio.psg.ymreg[127:0]
+(9)sim_top.uut.audio.psg.ymreg[127:0]
+(10)sim_top.uut.audio.psg.ymreg[127:0]
+(11)sim_top.uut.audio.psg.ymreg[127:0]
+(12)sim_top.uut.audio.psg.ymreg[127:0]
+(13)sim_top.uut.audio.psg.ymreg[127:0]
+(14)sim_top.uut.audio.psg.ymreg[127:0]
+(15)sim_top.uut.audio.psg.ymreg[127:0]
+(16)sim_top.uut.audio.psg.ymreg[127:0]
+(17)sim_top.uut.audio.psg.ymreg[127:0]
+(18)sim_top.uut.audio.psg.ymreg[127:0]
+(19)sim_top.uut.audio.psg.ymreg[127:0]
+(20)sim_top.uut.audio.psg.ymreg[127:0]
+(21)sim_top.uut.audio.psg.ymreg[127:0]
+(22)sim_top.uut.audio.psg.ymreg[127:0]
+(23)sim_top.uut.audio.psg.ymreg[127:0]
+(24)sim_top.uut.audio.psg.ymreg[127:0]
+(25)sim_top.uut.audio.psg.ymreg[127:0]
+(26)sim_top.uut.audio.psg.ymreg[127:0]
+(27)sim_top.uut.audio.psg.ymreg[127:0]
+(28)sim_top.uut.audio.psg.ymreg[127:0]
+(29)sim_top.uut.audio.psg.ymreg[127:0]
+(30)sim_top.uut.audio.psg.ymreg[127:0]
+(31)sim_top.uut.audio.psg.ymreg[127:0]
+(32)sim_top.uut.audio.psg.ymreg[127:0]
+(33)sim_top.uut.audio.psg.ymreg[127:0]
+(34)sim_top.uut.audio.psg.ymreg[127:0]
+(35)sim_top.uut.audio.psg.ymreg[127:0]
+(36)sim_top.uut.audio.psg.ymreg[127:0]
+(37)sim_top.uut.audio.psg.ymreg[127:0]
+(38)sim_top.uut.audio.psg.ymreg[127:0]
+(39)sim_top.uut.audio.psg.ymreg[127:0]
+(40)sim_top.uut.audio.psg.ymreg[127:0]
+(41)sim_top.uut.audio.psg.ymreg[127:0]
+(42)sim_top.uut.audio.psg.ymreg[127:0]
+(43)sim_top.uut.audio.psg.ymreg[127:0]
+(44)sim_top.uut.audio.psg.ymreg[127:0]
+(45)sim_top.uut.audio.psg.ymreg[127:0]
+(46)sim_top.uut.audio.psg.ymreg[127:0]
+(47)sim_top.uut.audio.psg.ymreg[127:0]
+(48)sim_top.uut.audio.psg.ymreg[127:0]
+(49)sim_top.uut.audio.psg.ymreg[127:0]
+(50)sim_top.uut.audio.psg.ymreg[127:0]
+(51)sim_top.uut.audio.psg.ymreg[127:0]
+(52)sim_top.uut.audio.psg.ymreg[127:0]
+(53)sim_top.uut.audio.psg.ymreg[127:0]
+(54)sim_top.uut.audio.psg.ymreg[127:0]
+(55)sim_top.uut.audio.psg.ymreg[127:0]
+(56)sim_top.uut.audio.psg.ymreg[127:0]
+(57)sim_top.uut.audio.psg.ymreg[127:0]
+(58)sim_top.uut.audio.psg.ymreg[127:0]
+(59)sim_top.uut.audio.psg.ymreg[127:0]
+(60)sim_top.uut.audio.psg.ymreg[127:0]
+(61)sim_top.uut.audio.psg.ymreg[127:0]
+(62)sim_top.uut.audio.psg.ymreg[127:0]
+(63)sim_top.uut.audio.psg.ymreg[127:0]
+(64)sim_top.uut.audio.psg.ymreg[127:0]
+(65)sim_top.uut.audio.psg.ymreg[127:0]
+(66)sim_top.uut.audio.psg.ymreg[127:0]
+(67)sim_top.uut.audio.psg.ymreg[127:0]
+(68)sim_top.uut.audio.psg.ymreg[127:0]
+(69)sim_top.uut.audio.psg.ymreg[127:0]
+(70)sim_top.uut.audio.psg.ymreg[127:0]
+(71)sim_top.uut.audio.psg.ymreg[127:0]
+(72)sim_top.uut.audio.psg.ymreg[127:0]
+(73)sim_top.uut.audio.psg.ymreg[127:0]
+(74)sim_top.uut.audio.psg.ymreg[127:0]
+(75)sim_top.uut.audio.psg.ymreg[127:0]
+(76)sim_top.uut.audio.psg.ymreg[127:0]
+(77)sim_top.uut.audio.psg.ymreg[127:0]
+(78)sim_top.uut.audio.psg.ymreg[127:0]
+(79)sim_top.uut.audio.psg.ymreg[127:0]
+(80)sim_top.uut.audio.psg.ymreg[127:0]
+(81)sim_top.uut.audio.psg.ymreg[127:0]
+(82)sim_top.uut.audio.psg.ymreg[127:0]
+(83)sim_top.uut.audio.psg.ymreg[127:0]
+(84)sim_top.uut.audio.psg.ymreg[127:0]
+(85)sim_top.uut.audio.psg.ymreg[127:0]
+(86)sim_top.uut.audio.psg.ymreg[127:0]
+(87)sim_top.uut.audio.psg.ymreg[127:0]
+(88)sim_top.uut.audio.psg.ymreg[127:0]
+(89)sim_top.uut.audio.psg.ymreg[127:0]
+(90)sim_top.uut.audio.psg.ymreg[127:0]
+(91)sim_top.uut.audio.psg.ymreg[127:0]
+(92)sim_top.uut.audio.psg.ymreg[127:0]
+(93)sim_top.uut.audio.psg.ymreg[127:0]
+(94)sim_top.uut.audio.psg.ymreg[127:0]
+(95)sim_top.uut.audio.psg.ymreg[127:0]
+(96)sim_top.uut.audio.psg.ymreg[127:0]
+(97)sim_top.uut.audio.psg.ymreg[127:0]
+(98)sim_top.uut.audio.psg.ymreg[127:0]
+(99)sim_top.uut.audio.psg.ymreg[127:0]
+(100)sim_top.uut.audio.psg.ymreg[127:0]
+(101)sim_top.uut.audio.psg.ymreg[127:0]
+(102)sim_top.uut.audio.psg.ymreg[127:0]
+(103)sim_top.uut.audio.psg.ymreg[127:0]
+(104)sim_top.uut.audio.psg.ymreg[127:0]
+(105)sim_top.uut.audio.psg.ymreg[127:0]
+(106)sim_top.uut.audio.psg.ymreg[127:0]
+(107)sim_top.uut.audio.psg.ymreg[127:0]
+(108)sim_top.uut.audio.psg.ymreg[127:0]
+(109)sim_top.uut.audio.psg.ymreg[127:0]
+(110)sim_top.uut.audio.psg.ymreg[127:0]
+(111)sim_top.uut.audio.psg.ymreg[127:0]
+(112)sim_top.uut.audio.psg.ymreg[127:0]
+(113)sim_top.uut.audio.psg.ymreg[127:0]
+(114)sim_top.uut.audio.psg.ymreg[127:0]
+(115)sim_top.uut.audio.psg.ymreg[127:0]
+(116)sim_top.uut.audio.psg.ymreg[127:0]
+(117)sim_top.uut.audio.psg.ymreg[127:0]
+(118)sim_top.uut.audio.psg.ymreg[127:0]
+(119)sim_top.uut.audio.psg.ymreg[127:0]
+(120)sim_top.uut.audio.psg.ymreg[127:0]
+(121)sim_top.uut.audio.psg.ymreg[127:0]
+(122)sim_top.uut.audio.psg.ymreg[127:0]
+(123)sim_top.uut.audio.psg.ymreg[127:0]
+(124)sim_top.uut.audio.psg.ymreg[127:0]
+(125)sim_top.uut.audio.psg.ymreg[127:0]
+(126)sim_top.uut.audio.psg.ymreg[127:0]
+(127)sim_top.uut.audio.psg.ymreg[127:0]
+@1401200
+-group_end
+@22
+sim_top.uut.audio.psg.reg0[7:0]
+sim_top.uut.audio.psg.reg1[7:0]
+sim_top.uut.audio.psg.reg2[7:0]
+sim_top.uut.audio.psg.reg3[7:0]
+sim_top.uut.audio.psg.reg4[7:0]
+sim_top.uut.audio.psg.reg5[7:0]
+sim_top.uut.audio.psg.reg6[7:0]
+sim_top.uut.audio.psg.reg7[7:0]
+@28
+sim_top.uut.audio.psg.CLK
+[pattern_trace] 1
+[pattern_trace] 0
