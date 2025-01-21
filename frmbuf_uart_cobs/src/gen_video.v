@@ -11,8 +11,8 @@ module gen_video(
   output reg [23:0] rgb
 );
   wire [VIDEO_X_BITWIDTH-1:0] x = x1-10'd104;
-  wire [VIDEO_Y_BITWIDTH-1:0] y = y1-10'd16;
-  wire de = x < 512 && y < 448;
+  wire [VIDEO_Y_BITWIDTH-1:0] y = y1-10'd48;
+  wire de = x < 256*2 && y < 192*2;
 
 
   wire [7:0] ram_read;
@@ -26,7 +26,7 @@ module gen_video(
     .dout(ram_read),
     .din(ram_write),
     .waddr(waddr),
-    .addr({y[7:0],x[7:0]}),
+    .addr({y[8:1],x[8:1]}),
     .write_enable(ram_writeenable)
   );
   // Video generation
