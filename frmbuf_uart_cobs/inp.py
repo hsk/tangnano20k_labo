@@ -16,6 +16,17 @@ def read_img(filename):
             vs.append(v)
     return vs
 
+def read_img2(filename):
+    img = pygame.image.load(filename)
+    img = pygame.transform.smoothscale(img,(256,192))
+    (w,h)=img.get_size()
+    vs = []
+    for y in range(h):
+        for x in range(w):
+            v=img.get_at((x,y))
+            vs.append((v[0]*8//256)*4*8 + (v[1]*8//256)*4 + v[2]*4//256)
+    return vs
+
 exit_f = False
 # シグナルハンドラを定義
 def handler(signum, frame):
@@ -26,7 +37,6 @@ def handler(signum, frame):
 signal.signal(signal.SIGINT, handler)
 ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*2, timeout=0,parity='N')
 k = 0
-vram = read_img("res/sc8.png")
 
 while True:
     if True:
@@ -35,6 +45,9 @@ while True:
         if exit_f: break
         ser.write(data)
         if exit_f: break
+    vram = read_img2(f"res/sc8_{k}.jpg")
+    if k < 2: k += 1
+    else: k = 0
     # data
     data = bytes([0])+cobs.encode(bytes([1])+bytes(vram))
     if exit_f: break
