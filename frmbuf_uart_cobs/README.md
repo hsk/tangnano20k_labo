@@ -3,7 +3,7 @@
 これは FPGAのtangnano20k で256x256x8bitのフレームバッファを作って表示するサンプルコードです。
 
 
-https://github.com/user-attachments/assets/96eb738b-b23f-4885-b3dc-f562d4946520
+https://github.com/user-attachments/assets/bcf4de93-f4b9-4e14-bf81-fc132f577f68
 
 
 gen_video.v 内でフレームバッファを表示するためのROMが定義されていて、そこから読み込んで HDMI 表示します。
