@@ -22,7 +22,7 @@
 - [x] [sp](sp) スプライト1個表示する
 - [x] [sp1](sp1) スプライトが128個表示する (ラインの制限はなし)
 - [x] [frmbuf_uart_cobs](frmbuf_uart_cobs) 256x192で256色のフレームバッファ表示
-- [ ] [frmbuf_16](frmbuf_16) 1バイトで2ドットの16色でパレット表示のフレームバッファ
+- [x] [frmbuf_16](frmbuf_16) 1バイトで2ドットの16色でパレット表示のフレームバッファ
 - [ ] [frmbuf_p8](frmbuf_p8) 3プレーン8色のRGBフレームバッファ
 - [ ] [frmbuf_p64](frmbuf_p64) 6プレーン64色のRGBフレームバッファ
 - [ ] [frmbuf_ham6](frmbuf_ham6) 16色パレット|(r|g|b)の輝度設定のAMIGAのHAM的なフレームバッファ
