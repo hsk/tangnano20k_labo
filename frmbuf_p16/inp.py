@@ -16,11 +16,16 @@ def read_img(filename):
         vs.append(rgb512&255)
         vs.append(rgb512>>8)
     vs = vs[0:32]
-    for y in range(h):
-        for x in range(0,w,2):
-            v=(img.get_at_mapped((x,y))) 
-            v+= img.get_at_mapped((x+1,y))*16
-            vs.append(v)
+    for i in range(4):
+        for y in range(256):
+            p = 0
+            for x in range(w):
+                v = img.get_at_mapped((x,y)) if y < h else 0
+                v=((v>>(3-i))&1)
+                p = (p<<1)+v
+                if x&7==7:
+                    vs.append(p)
+                    p=0
     return vs
 
 exit_f = False

@@ -45,7 +45,7 @@ module gen_video(
   always@(posedge clk) begin
     if (!rst) begin
       rgb <= 24'd0;
-    end else if (xa < 256*2 && y < 192*2) begin
+    end else if (x < 256*2 && y < 192*2) begin
       if (x < 256*2 && y < 192*2) rgb <= {c[10:8],c[10:8],c[10:9],c[6:4],c[6:4],c[6:5],c[2:0],c[2:0],c[2:1]};
     end else rgb <= 0;
   end
@@ -147,16 +147,27 @@ module RAM_sync(input clk, write_enable, [14:0] waddr, [7:0] din,
       end
     end
   end
-  wire [14:0] addr = {y,x[7:1]};
   reg [7:0] mem [32768];
-  reg [7:0] dout;
-  reg xx;
+  reg [2:0] s;
+  reg [7:0] pal1;
+  reg [7:0] pal2;
+  reg [7:0] pal3;
+  reg [7:0] pal4;
+  reg [2:0] xx;
   always @(posedge clk) begin
     if (write_enable)		// if write enabled
       mem[waddr] = din;	// write memory from din
-    dout <= mem[addr];	// read memory to dout (sync)
-    xx <= x[0];
+    pal1 <= mem[{2'd0,y,x[7:3]}];
+    pal2 <= mem[{2'd1,y,x[7:3]}];
+    pal3 <= mem[{2'd2,y,x[7:3]}];
+    pal4 <= mem[{2'd3,y,x[7:3]}];
+    xx <= 7-x[2:0];
   end
-  assign pal = xx ? dout[7:4]:dout[3:0];
+  assign pal = getPal(pal1,pal2,pal3,pal4,xx);
+
+  function [3:0] getPal(input [7:0] pal1,input [7:0] pal2,input [7:0] pal3,input [7:0] pal4,input [2:0] x);
+    getPal = {1'((pal1>>x)&1),1'((pal2>>x)&1),1'((pal3>>x)&1),1'((pal4>>x)&1)};
+  endfunction
+
 endmodule
 
