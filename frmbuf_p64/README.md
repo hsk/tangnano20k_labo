@@ -2,6 +2,10 @@
 
 これは FPGAのtangnano20k で256x256x6bitのフレームバッファを作って表示するサンプルコードです。
 
+
+https://github.com/user-attachments/assets/73d6ab82-bdf6-4951-a0d5-7d968c8781b9
+
+
 gen_video.v 内でフレームバッファを表示するためのROMが定義されていて、そこから読み込んで HDMI 表示します。
 
 PCから python を使って UART でパレットとビットマップデータを送りその情報を受け取ってフレームバッファの表示を変化させます。
