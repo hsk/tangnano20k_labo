@@ -149,24 +149,18 @@ module RAM_sync(input clk, write_enable, [14:0] waddr, [7:0] din,
   end
   reg [7:0] mem [32768];
   reg [2:0] s;
-  reg [7:0] pal1;
-  reg [7:0] pal2;
-  reg [7:0] pal3;
-  reg [7:0] pal4;
+  reg [31:0] pal1;
   reg [2:0] xx;
   always @(posedge clk) begin
     if (write_enable)		// if write enabled
       mem[waddr] = din;	// write memory from din
-    pal1 <= mem[{2'd0,y,x[7:3]}];
-    pal2 <= mem[{2'd1,y,x[7:3]}];
-    pal3 <= mem[{2'd2,y,x[7:3]}];
-    pal4 <= mem[{2'd3,y,x[7:3]}];
+    pal1 <= {mem[{2'd0,y,x[7:3]}],mem[{2'd1,y,x[7:3]}],mem[{2'd2,y,x[7:3]}],mem[{2'd3,y,x[7:3]}]};
     xx <= 7-x[2:0];
   end
-  assign pal = getPal(pal1,pal2,pal3,pal4,xx);
+  assign pal = getPal(pal1,xx);
 
-  function [3:0] getPal(input [7:0] pal1,input [7:0] pal2,input [7:0] pal3,input [7:0] pal4,input [2:0] x);
-    getPal = {1'((pal1>>x)&1),1'((pal2>>x)&1),1'((pal3>>x)&1),1'((pal4>>x)&1)};
+  function [3:0] getPal(input [31:0] pal1,input [2:0] x);
+    getPal = {1'((pal1[31:24]>>x)&1),1'((pal1[23:16]>>x)&1),1'((pal1[15:8]>>x)&1),1'((pal1[7:0]>>x)&1)};
   endfunction
 
 endmodule
