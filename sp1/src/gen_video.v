@@ -31,13 +31,13 @@ module gen_video(
   SpriteRam sp_ram(clk,rspno,rsx,rsy,wspno,wsx,wsy,wsp,spno,sx,sy);
   wire [7:0] ptn_addr; wire [63:0] ptn;
   PatternRom pattern_rom(clk, ptn_addr[3:0], ptn);
-  wire [3:0] pal; wire [23:0] c;
-  PaletteRom pal_rom(pal,c);
+  wire [3:0] pal; wire [11:0] c;
+  PaletteRAM pal_ram(.pal(pal),.cout(c));
   SpriteRender sp_render(clk,rst,pixX,frameWidth,py,frameHeight,pal,
                          spno,sx,sy,
                          ptn_addr,ptn);
   always@(posedge clk) begin
-    rgb <= (pixX-256-4>=256*3) ? 0 : pal==0 ? 24'h00aa00 : c;// 非表示時
+    rgb <= (pixX-256-4>=256*3) ? 0 : pal==0 ? 24'h00aa00 : {c[11:8],c[11:8],c[7:4],c[7:4],c[3:0],c[3:0]};// 非表示時
   end
 endmodule
 
@@ -88,8 +88,8 @@ module PatternRom(input clk, [3:0] ptn_addr, output [63:0] ptn);
   reg [0:63] mem[16];
   assign ptn = mem[ptn_addr];
 endmodule
-
-module PaletteRom(input [3:0] pal, output [23:0] c);
+/*
+module PaletteRam(input [3:0] pal, output [23:0] c);
   initial begin
     mem['h00] = 24'h000000;
     mem['h01] = 24'h242424;
@@ -110,6 +110,17 @@ module PaletteRom(input [3:0] pal, output [23:0] c);
   end
   reg [23:0] mem[16];
   assign c = mem[pal];
+endmodule
+*/
+module PaletteRAM(
+  input clk, pwrite_enable, [5:0] pwaddr, [7:0] pin,
+  input [3:0] pal, output [11:0] cout);
+  reg [7:0] mem[32];
+  always @(posedge clk) begin
+    if (pwrite_enable)		// if write enabled
+      mem[pwaddr] = pin;	// write memory from din
+  end
+  assign cout = {mem[{pal,1'd0}],mem[{pal,1'd1}][3:0]};
 endmodule
 
 module LineRam(input clk,  w1, [3:0] d1, [8:0] p1, output [3:0] o1,input clr2, [8:0] p2, output [3:0] o2);
