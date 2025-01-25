@@ -40,26 +40,22 @@ ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*2, tim
 k = 0
 
 while True:
-    if True:
-        # address mode = 2
-        data = bytes([0])+cobs.encode(bytes([2,0,0]))
-        if exit_f: break
-        ser.write(data)
-        if exit_f: break
     vram = read_img(f"res/sc8_{k}.png")
     if k < 2: k += 1
     else: k = 0
 
     # palette mode = 4
-    data = bytes([0])+cobs.encode(bytes([4])+bytes(vram[0:32]))
+    ser.write(bytes([0])+cobs.encode(bytes([4])+bytes(vram[0:32])))
     if exit_f: break
-    ser.write(data)
-    if exit_f: break
-    # data mode = 1
-    data = bytes([0])+cobs.encode(bytes([1])+bytes(vram[128:]))
-    if exit_f: break
-    ser.write(data)
-    if exit_f: break
-    time.sleep(2.5)
+
+    for i in range(6):
+        # address mode = 2
+        pos = 8192*i
+        ser.write(bytes([0])+cobs.encode(bytes([2,pos&255,pos>>8])))
+        if exit_f: break
+        # data mode = 1
+        ser.write(bytes([0])+cobs.encode(bytes([1])+bytes(vram[128+pos:128+pos+256*192//8])))
+        if exit_f: break
+    time.sleep(2)
     if exit_f: break
 ser.close()
