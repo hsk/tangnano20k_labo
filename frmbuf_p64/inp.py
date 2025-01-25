@@ -60,6 +60,6 @@ while True:
     if exit_f: break
     ser.write(data)
     if exit_f: break
-    time.sleep(3)
+    time.sleep(2.5)
     if exit_f: break
 ser.close()
