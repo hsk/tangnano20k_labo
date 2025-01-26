@@ -2,6 +2,8 @@
  * 位置のピクセルのRGBカラーを生成する。 (pixX,pixY).
  * RGBデータは1クロック・サイクルでレディになり、安定していなければならない (!)
  */
+import configPackage::*;
+
 module gen_video(
   input wire I_clk_pixel,
   input wire I_reset_n,

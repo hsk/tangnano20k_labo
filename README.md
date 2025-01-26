@@ -24,10 +24,17 @@
 - [x] [frmbuf_uart_cobs](frmbuf_uart_cobs) 256x192で256色のフレームバッファ表示
 - [x] [frmbuf_16](frmbuf_16) 1バイトで2ドットの16色でパレット表示のフレームバッファ
 - [ ] [frmbuf_p8](frmbuf_p8) 3プレーン8色のRGBフレームバッファ
-- [ ] [frmbuf_p64](frmbuf_p64) 6プレーン64色のRGBフレームバッファ
-- [ ] [frmbuf_ham6](frmbuf_ham6) 16色パレット|(r|g|b)の輝度設定のAMIGAのHAM的なフレームバッファ
+- [x] [frmbuf_p64](frmbuf_p64) 6プレーン64色のRGBフレームバッファ
+- [x] [frmbuf_ham6](frmbuf_ham6) 16色パレット|(r|g|b)の輝度設定のAMIGAのHAM的なフレームバッファ
 - [ ] [frmbuf_ham8](frmbuf_ham8) 64色パレット|(r|g|b)の輝度設定のAMIGAのHAM8的なフレームバッファ
 - [ ] MSX研鑚推進委員会さんの画像圧縮をハードウェア化
+
+- [ ] ラスタ色かえができるハードウェア
+- [ ] スペースハリアーな市松模様
+- [ ] F1レースな2車線道路の描画
+- [ ] 3車線
+- [ ] アップダウンのある道路描画
+- [ ] 分岐のある道路描画
 
 オーディオ
 
@@ -41,3 +48,4 @@ CPU
 - [x] [stack_utx1](stack_utx1) スタックマシンとuart_txで出力1
 - [x] [stack_utx2](stack_utx2) スタックマシンとuart_txで出力2
 - [ ] [stack_utx3](stack_utx3) スタックマシンとuart_txで出力3
+- [ ] [femto8](femto8) femto8

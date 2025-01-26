@@ -18,12 +18,10 @@ module gen_video(
   always@(posedge clk) begin
     if (py==720   && pixX<=N) begin
       rspno <= pixX;
-      if(pixX>0) begin
-        wspno <= rspno;
-        wsx <= rsx + 1;
-        wsy <= rsy + 1;
-        wsp <= 1;
-      end
+      wspno <= rspno;
+      wsx <= rsx + 1;
+      wsy <= rsy + 1;
+      wsp <= 1;
     end else wsp <= 0;
   end
   
@@ -31,14 +29,30 @@ module gen_video(
   SpriteRam sp_ram(clk,rspno,rsx,rsy,wspno,wsx,wsy,wsp,spno,sx,sy);
   wire [7:0] ptn_addr; wire [63:0] ptn;
   PatternRom pattern_rom(clk, ptn_addr[3:0], ptn);
-  wire [3:0] pal; wire [11:0] c;
-  PaletteRAM pal_ram(.pal(pal),.cout(c));
+  wire [3:0] pal; wire [23:0] c;
+  PaletteRom pal_rom(pal,c);
   SpriteRender sp_render(clk,rst,pixX,frameWidth,py,frameHeight,pal,
                          spno,sx,sy,
                          ptn_addr,ptn);
   always@(posedge clk) begin
-    rgb <= (pixX-256-4>=256*3) ? 0 : pal==0 ? 24'h00aa00 : {c[11:8],c[11:8],c[7:4],c[7:4],c[3:0],c[3:0]};// 非表示時
+    rgb <= (pixX-256-4>=256*3) ? 0 : pal==0 ? 24'h00aa00 : c;// 非表示時
   end
+endmodule
+
+
+module SpriteRender(
+  input clk, rst, [WB:0] pixX, frameWidth, [9:0] py, frameHeight,
+  output [3:0] pal,
+  output [NB:0] spno, input [7:0] sx,sy,
+  output [7:0] ptn_addr, input [63:0] ptn);
+
+  wire [7:0] x, y; wire [1:0] xc,yc;
+  GetXY getxy(clk, pixX, frameWidth, py, frameHeight, x, y, xc, yc);
+  wire w; wire [3:0] o1,dt; wire [8:0] p1;
+  LineRender render(clk, pixX,frameWidth,yc,y,sx,sy,ptn, o1,spno,ptn_addr, w, p1, dt);
+  wire rst1; wire [3:0] o0; wire [8:0] p0;
+  LineBuffer buffer(clk, rst1, w, p0, p1, dt, o0, o1);
+  LineView view(clk, pixX, x, y, xc,yc, o0, rst1, p0, pal);
 endmodule
 
 module SpriteRam(input clk,
@@ -88,8 +102,8 @@ module PatternRom(input clk, [3:0] ptn_addr, output [63:0] ptn);
   reg [0:63] mem[16];
   assign ptn = mem[ptn_addr];
 endmodule
-/*
-module PaletteRam(input [3:0] pal, output [23:0] c);
+
+module PaletteRom(input [3:0] pal, output [23:0] c);
   initial begin
     mem['h00] = 24'h000000;
     mem['h01] = 24'h242424;
@@ -110,43 +124,6 @@ module PaletteRam(input [3:0] pal, output [23:0] c);
   end
   reg [23:0] mem[16];
   assign c = mem[pal];
-endmodule
-*/
-module PaletteRAM(
-  input clk, pwrite_enable, [5:0] pwaddr, [7:0] pin,
-  input [3:0] pal, output [11:0] cout);
-  reg [7:0] mem[32];
-  always @(posedge clk) begin
-    if (pwrite_enable)		// if write enabled
-      mem[pwaddr] = pin;	// write memory from din
-  end
-  assign cout = {mem[{pal,1'd0}],mem[{pal,1'd1}][3:0]};
-endmodule
-
-module LineRam(input clk,  w1, [3:0] d1, [8:0] p1, output [3:0] o1,input clr2, [8:0] p2, output [3:0] o2);
-  reg [3:0] line[512];
-  assign o1 = line[p1];
-  assign o2 = line[p2];
-  always @(posedge clk) begin
-    if (w1) line[p1] <= d1;
-    if (clr2) line[p2] <= 0;
-  end
-endmodule
-
-module SpriteRender(
-  input clk, rst, [WB:0] pixX, frameWidth, [9:0] py, frameHeight,
-  output [3:0] pal,
-  output [NB:0] spno, input [7:0] sx,sy,
-  output [7:0] ptn_addr, input [63:0] ptn);
-
-  wire w1; wire [3:0] o1, d1; wire [8:0] p1;
-  wire clr2; wire [3:0] o2; wire [8:0] p2;
-  LineRam line_ram(clk, w1, d1, p1, o1, clr2, p2, o2);
-
-  wire [7:0] x, y; wire [1:0] xc,yc;
-  GetXY getxy(clk, pixX, frameWidth, py, frameHeight, x, y, xc, yc);
-  LineRender render(clk, pixX,frameWidth,yc,y, spno,sx,sy, ptn_addr,ptn, w1, d1, p1, o1);
-  LineView view(clk, pixX, x, y, xc,yc, o2, clr2, p2, pal);
 endmodule
 
 module GetXY(input clk,
@@ -172,21 +149,21 @@ module GetXY(input clk,
 endmodule
 
 module LineRender(input clk, [WB:0] pixX, frameWidth, [1:0] yc, [7:0] y,
-  output reg [NB:0] spno, input [7:0] sx,sy,
-  output reg [7:0] ptn_addr, input [63:0] ptn,
-  output reg w1, reg [3:0] d1, reg [8:0] p1, input [3:0] o1);
+  [7:0] sx,sy, [63:0] ptn, [3:0] o1, output reg [NB:0] spno,reg [7:0] ptn_addr,
+  reg w, reg [8:0] p1, reg [3:0] dt);
   reg [3:0] spbit; reg st;
+  wire [3:0] spbit2 = ~spbit;
   always @(posedge clk) begin
     // ラインバッファに書き込み
     if (yc == 2 && pixX==frameWidth-1) begin
-      spno<=0; spbit<=0; w1 <= 0; st <= 0;
+      spno<=0; spbit<=0; w <= 0; st <= 0;
     end else if (spno[NB]==0) begin
       if (st<1) begin
-        w1 = 0;
+        w = 0;
         ptn_addr = y - sy;
         if (ptn_addr < 16) begin
-          st <= 1;
-          p1 <= {!y[0], sx};
+          st <= st+1;
+          p1 <= {!y[0], 8'(sx)};
         end else begin
           spno <= spno + 1;
           spbit <= 0;
@@ -198,21 +175,31 @@ module LineRender(input clk, [WB:0] pixX, frameWidth, [1:0] yc, [7:0] y,
         end
         spbit <= spbit + 1;
 
-        p1 <= {!y[0], sx + spbit};
-        d1 = ptn>>(6'(4'(~spbit))<<2);
-        w1 = (o1==0);
+        p1 <= {!y[0], 8'(sx + spbit)};
+        dt = ptn>>((64'(spbit2))<<2);
+        w = (o1==0);
       end
     end
   end
 endmodule
 
 module LineView(input clk, [WB:0] pixX, [7:0] x, y, [1:0] xc,yc,
-  [3:0] o2, output reg clr2, reg [8:0] p2, reg [3:0] pal);
+  [3:0] o0, output reg rst1, reg [8:0] p0, reg [3:0] pal);
   always @(posedge clk) begin
     if (pixX>=256) begin   // 表示
-      p2 = {y[0],x};
-      if (xc==0)        begin clr2 = 0; pal = o2; end
-      else if(xc==2 && yc==2) clr2 = 1;
+      p0 = {y[0],x};
+      if (xc==0)        begin rst1 = 0; pal = o0; end
+      else if(xc==2 && yc==2) rst1 = 1;
     end
+  end
+endmodule
+
+module LineBuffer(input clk, rst1, w, [8:0] p0, [8:0] p1, [3:0] dt, output [3:0] o0,[3:0] o1);
+  reg [3:0] line[512];
+  assign o0 = line[p0];
+  assign o1 = line[p1];
+  always @(posedge clk) begin
+    if (rst1) line[p0] <= 0;
+    if (w) line[p1] <= dt;
   end
 endmodule

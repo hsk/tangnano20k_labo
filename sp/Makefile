@@ -10,6 +10,8 @@ sim:
 wave:
 	cd sim; make wave
 clean:
-	rm -rf impl
+	mv impl/pnr/project.fs impl/project.fs
+	rm -rf impl/gwsynthesis impl/pnr/* impl/temp
+	mv impl/project.fs impl/pnr/project.fs
 	cd sim; make clean
 .PHONY: sim
