@@ -3,7 +3,7 @@
 これは FPGAのtangnano20k で256x256x6bitのフレームバッファから AMIGA の HAM モードのように4096色表示するサンプルコードです。
 
 
-https://github.com/user-attachments/assets/1b8e08fa-16ee-4624-8ad5-5ee63001e7a5
+https://github.com/user-attachments/assets/14b26cd4-54c4-4415-a209-96878a212895
 
 
 gen_video.v 内でフレームバッファを表示するためのROMが定義されていて、そこから読み込んで HDMI 表示します。
