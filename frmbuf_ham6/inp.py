@@ -36,7 +36,7 @@ def handler(signum, frame):
     exit_f = True
 # signal.SIGALRMのシグナルハンドラを登録
 signal.signal(signal.SIGINT, handler)
-ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*2, timeout=0,parity='N')
+ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*16, timeout=0,parity='N')
 k = 0
 
 while True:
@@ -56,6 +56,6 @@ while True:
         # data mode = 1
         ser.write(bytes([0])+cobs.encode(bytes([1])+bytes(vram[128+pos:128+pos+256*192//8])))
         if exit_f: break
-    time.sleep(2)
+    time.sleep(1)
     if exit_f: break
 ser.close()
