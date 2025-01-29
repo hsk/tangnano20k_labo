@@ -11,8 +11,8 @@ module Serial_rx(
     reg [7:0] data;  // 受信したデータを一時的に保存する変数
     reg [15:0] divisor_counter;  // ボーレート生成のためのカウンタ
 
-    parameter DELAY_FRAMES = 232/2;  //27,000,000 (27Mhz) / 115200 Baud rate
-    parameter HALF_DELAY_WAIT = 116/2;  // 27,000,000 (27Mhz) / 115200 Baud rate /2
+    parameter DELAY_FRAMES = 232/16;  //27,000,000 (27Mhz) / 115200 Baud rate
+    parameter HALF_DELAY_WAIT = 116/16;  // 27,000,000 (27Mhz) / 115200 Baud rate /2
 
     localparam RX_STATE_IDLE = 0;  // 受信状態: アイドル
     localparam RX_STATE_START_BIT = 1;  // 受信状態: スタートビット
