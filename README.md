@@ -29,6 +29,7 @@
 - [ ] [frmbuf_ham8](frmbuf_ham8) 64色パレット|(r|g|b)の輝度設定のAMIGAのHAM8的なフレームバッファ
 - [ ] MSX研鑚推進委員会さんの画像圧縮をハードウェア化
 
+- [ ] [frmbuf_16zoom](frmbuf_16zoom) フレームバッファの拡大縮小
 - [ ] ラスタ色かえができるハードウェア
 - [ ] スペースハリアーな市松模様
 - [ ] F1レースな2車線道路の描画
@@ -49,3 +50,9 @@ CPU
 - [x] [stack_utx2](stack_utx2) スタックマシンとuart_txで出力2
 - [ ] [stack_utx3](stack_utx3) スタックマシンとuart_txで出力3
 - [ ] [femto8](femto8) femto8
+
+メモリ
+
+SSRAM Shadow SRAM 41472bits 5184bytes
+BSRAM Block SRAM 828Kbits   103.5bytes 18Kbits * 46 2.25KBytes * 46
+Numbers of B-SRAM 	46
