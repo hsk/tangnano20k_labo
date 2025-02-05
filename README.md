@@ -22,6 +22,7 @@
 - [x] [sp](sp) スプライト1個表示する
 - [x] [sp1](sp1) スプライトが128個表示する (ラインの制限はなし)
 - [x] [frmbuf_uart_cobs](frmbuf_uart_cobs) 256x192で256色のフレームバッファ表示
+- [ ] [frmbuf_rot](frmbuf_rot) 256x192で256色のフレームバッファ表示+回転
 - [x] [frmbuf_16](frmbuf_16) 1バイトで2ドットの16色でパレット表示のフレームバッファ
 - [ ] [frmbuf_p8](frmbuf_p8) 3プレーン8色のRGBフレームバッファ
 - [x] [frmbuf_p64](frmbuf_p64) 6プレーン64色のRGBフレームバッファ
@@ -54,5 +55,8 @@ CPU
 メモリ
 
 SSRAM Shadow SRAM 41472bits 5184bytes
-BSRAM Block SRAM 828Kbits   103.5bytes 18Kbits * 46 2.25KBytes * 46
+BSRAM Block SRAM 828Kbits   2KBytes * 46 92KBytes
 Numbers of B-SRAM 	46
+
+- [x] [frmbuf_720p_linebuf](frmbuf_720p_linebuf) 256x192で256色のフレームバッファ表示
+- [x] [frmbuf_720p_sdram](frmbuf_720p_sdram) 256x192で256色のフレームバッファ表示
