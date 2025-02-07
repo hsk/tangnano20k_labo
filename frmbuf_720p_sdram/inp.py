@@ -48,11 +48,13 @@ while True:
         ser.write(data)
         if exit_f: break
     vram = read_img2(f"res/sc8_{k}.jpg")
-    if k < 2: k += 1
+    if k < 3: k += 1
     else: k = 0
     # data
     data = bytes([0])+cobs.encode(bytes([1])+bytes(vram))
     if exit_f: break
     ser.write(data)
+    if exit_f: break
+    time.sleep(0.5)
     if exit_f: break
 ser.close()

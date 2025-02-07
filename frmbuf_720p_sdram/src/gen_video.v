@@ -132,8 +132,8 @@ module VideoRenderer(
   output [12:0] rend_c,
   output [23:0] rgb);
   // x,y座標を求める
-  wire [7:0] x, y; wire [1:0] xc,yc;
-  GetXY getxy(clk, x1, frameWidth, y1, frameHeight, x, y, xc, yc, rend_c);
+  wire [7:0] x, y; wire [1:0] yc;
+  GetXY getxy(clk, x1, frameWidth, y1, frameHeight, x, y, yc, rend_c);
   // ラインの描画
   wire lb_w_en; wire [7:0] lb_w_wd; wire [8:0] lb_w_ad;
   LineRenderer render(
@@ -145,7 +145,7 @@ module VideoRenderer(
   LineBuffer buffer(clk, lb_w_en, lb_w_ad, lb_w_wd, lb_r_ad, lb_r_rd);
   // ラインの描画 8bit色を取得
   wire [7:0] col;
-  LineView view(clk, x1, y1, x, y, lb_r_ad, lb_r_rd, sdram_init_busy, col);
+  LineView view(clk, x1, y1, x, y, lb_r_ad, lb_r_rd, col);
   // 24bit色を取得
   assign rgb = {col[7:5],col[7:5],col[7:6],
                 col[4:2],col[4:2],col[4:3],
@@ -155,21 +155,25 @@ endmodule
 module GetXY(input clk,
   input [VIDEO_X_BITWIDTH-1:0] x1, [VIDEO_X_BITWIDTH-1:0] frameWidth,
   input [VIDEO_Y_BITWIDTH-1:0] y1, [VIDEO_Y_BITWIDTH-1:0] frameHeight,
-  output reg [7:0] x, reg [7:0] y, reg [1:0] xc, reg [1:0] yc, reg [12:0] rend_c);
+  output reg [7:0] x, reg [7:0] y, reg [1:0] yc, reg [12:0] rend_c);
+  reg [1:0] xc;
   always @(posedge clk) begin
     // x座標更新
     if (x1==256-1) begin
       xc <= 0; x <= 0;
-    end else if (xc == 2) begin
+    end else if (xc < 2) xc <= xc + 2'd1;
+    else begin
       xc <= 0; x <= x + 8'd1;
-    end else xc <= xc + 2'd1;
+    end
     // y座標更新
     if (x1==frameWidth-1) begin
-      if (y1 == 72-1) begin
+      if (y1 == 72-3-1) begin
         yc <= 0; y <= 0;
-      end else if (yc == 2) begin
+      end else if (yc < 2)
+        yc <= yc + 2'd1;
+      else begin
         yc <= 0; y <= y + 8'd1;
-      end else yc <= yc + 2'd1;
+      end
     end
     rend_c <= (x1==frameWidth-1 && yc == 2) ? 13'd0 : rend_c + 13'd1;
   end
@@ -183,11 +187,11 @@ module LineRenderer(input clk, [12:0] rend_c, [7:0] y,
   // vram読み込み設定
   wire [7:0] read_x;
   assign read_x = {rend_c[9:4], 2'd0};// 読み込みx座標は16ドットごとに4個移動
-  assign b_r_en = (rend_c < 256*4) && (rend_c[3:0]==0); // 読み込むタイミングは16ドットごとの0番目
+  assign b_r_en = rend_c < 256*4 && rend_c[3:0]==0 && y < 192; // 読み込むタイミングは16ドットごとの0番目
   assign b_r_ad = {y,read_x}; // 読み込みアドレスは xとyから決まる
   // vramデータをラインバッファに書き込む
   wire rend_en; wire [7:0] rend_x;
-  assign rend_en = (rend_c < 256*4) && (8<=rend_c[3:0] && rend_c[3:0]<12); // 8,9,10,11にある場合
+  assign rend_en = rend_c < 256*4 && 8<=rend_c[3:0] && rend_c[3:0]<12 && y < 192; // 8,9,10,11にある場合
   assign rend_x = {rend_c[9:4],rend_c[1:0]};// 8,9,10,11で書き込み
   // ラインバッファに書き込み
   assign lb_w_wd = b_r_rd; // バッファから読み込んだデータをラインバッファに書き込む
@@ -198,9 +202,9 @@ endmodule
 // 表示エリアないならラインバッファから読み出して表示する。
 module LineView(input clk, [VIDEO_X_BITWIDTH-1:0] x1, [VIDEO_Y_BITWIDTH-1:0] y1, [7:0] x, y,
   output [8:0] lb_r_ad, input [7:0] lb_r_rd,
-  input sdram_init_busy,
   output [7:0] col);
-  assign view = (256 <= x1 && x1 < 256*4 && 72+3 <= y1 && y1 < 72+3+192*3); // 表示エリアなら
+  wire view;
+  assign view = 256 <= x1 && x1 < 256*4 && 72 <= y1 && y1 < 72+192*3; // 表示エリアなら
   assign lb_r_ad = {y[0],x}; // ラインバッファの読み込みのアドレス
   assign col = view ? lb_r_rd : 7; // ラインバッファの色を読み込む
 endmodule

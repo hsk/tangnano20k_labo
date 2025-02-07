@@ -33,11 +33,11 @@ def handler(signum, frame):
     global exit_f
     print(f'handlerが呼び出されました(signum={signum})')
     exit_f = True
-    ser.close()
+#    ser.close()
     exit(0)
 # signal.SIGALRMのシグナルハンドラを登録
 signal.signal(signal.SIGINT, handler)
-ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*16, timeout=0,parity='N')
+ser = serial.Serial(port='/dev/tty.usbserial-20230306211',baudrate=115200*16, timeout=1,parity='N')
 k = 0
 
 while True:
@@ -48,13 +48,13 @@ while True:
         ser.write(data)
         if exit_f: break
     vram = read_img2(f"res/sc8_{k}.jpg")
-    if k < 2: k += 1
+    if k < 3: k += 1
     else: k = 0
     # data
     data = bytes([0])+cobs.encode(bytes([1])+bytes(vram))
     if exit_f: break
     ser.write(data)
     if exit_f: break
-    time.sleep(0.05)
+    time.sleep(0.5)
     if exit_f: break
 ser.close()

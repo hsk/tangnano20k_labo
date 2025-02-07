@@ -97,8 +97,8 @@ module VideoRenderer(
   output [15:0] b_r_ad, input [7:0] b_r_rd,
   output [23:0] rgb);
   // x,y座標を求める
-  wire [7:0] x, y; wire [1:0] xc,yc;
-  GetXY getxy(clk, x1, frameWidth, y1, frameHeight, x, y, xc, yc);
+  wire [7:0] x, y; wire [1:0] yc;
+  GetXY getxy(clk, x1, frameWidth, y1, frameHeight, x, y, yc);
   // ラインの描画
   wire lb_w_en; wire [7:0] lb_w_wd; wire [8:0] lb_w_ad;
   LineRenderer render(
@@ -120,21 +120,25 @@ endmodule
 module GetXY(input clk,
   input [VIDEO_X_BITWIDTH-1:0] x1, [VIDEO_X_BITWIDTH-1:0] frameWidth,
   input [VIDEO_Y_BITWIDTH-1:0] y1, [VIDEO_Y_BITWIDTH-1:0] frameHeight,
-  output reg [7:0] x, reg [7:0] y, reg [1:0] xc, reg [1:0] yc);
+  output reg [7:0] x, reg [7:0] y, reg [1:0] yc);
+  reg [1:0] xc;
   always @(posedge clk) begin
     // x座標更新
     if (x1==256-1) begin
       xc <= 0; x <= 0;
-    end else if (xc == 2) begin
+    end else if (xc < 2) xc <= xc + 2'd1;
+    else begin
       xc <= 0; x <= x + 8'd1;
-    end else xc <= xc + 2'd1;
+    end
     // y座標更新
     if (x1==frameWidth-1) begin
-      if (y1 == 72-1) begin
+      if (y1 == 72-3-1) begin
         yc <= 0; y <= 0;
-      end else if (yc == 2) begin
+      end else if (yc < 2)
+        yc <= yc + 2'd1;
+      else begin
         yc <= 0; y <= y + 8'd1;
-      end else yc <= yc + 2'd1;
+      end
     end
   end
 endmodule
@@ -144,26 +148,25 @@ module LineRenderer(input clk, [VIDEO_X_BITWIDTH-1:0] x1, [7:0] y, [1:0] yc,
   output reg [15:0] b_r_ad, input [7:0] b_r_rd,
   output reg lb_w_en, reg [8:0] lb_w_ad, reg [7:0] lb_w_wd);
   always @(posedge clk) begin
-    if (yc == 0 && x1 < 256) begin
-      // ラインバッファに書き込み
-      b_r_ad = {y,x1[7:0]}; // バッファアドレスを指定し
-      lb_w_wd <= b_r_rd; // バッファから読み込んだデータをラインバッファに書き込む
-      lb_w_ad <= {!y[0], x1[7:0]}; // ラインバッファのアドレス
+    if (yc == 0 && x1 < 256 && y < 192)
+      b_r_ad <= {y,x1[7:0]}; // バッファアドレスを指定し
+    // ラインバッファに書き込み
+    if (yc == 0 && 1 <= x1 && x1 < 256+1 && y < 192) begin
       lb_w_en <= 1; // 書き込み ON
+      lb_w_wd <= b_r_rd; // バッファから読み込んだデータをラインバッファに書き込む
+      lb_w_ad <= {!y[0], x1[7:0]-8'd1}; // ラインバッファのアドレス
     end else lb_w_en <= 0;
   end
 endmodule
 
 // 表示エリアないならラインバッファから読み出して表示する。
 module LineView(input clk, [VIDEO_X_BITWIDTH-1:0] x1, [VIDEO_Y_BITWIDTH-1:0] y1, [7:0] x, y,
-  output reg [8:0] lb_r_ad, input [7:0] lb_r_rd,
-  output reg [7:0] col);
-  always @(posedge clk) begin
-    if (256 <= x1 && x1 < 256*4 && 72 <= y1 && y1 < 72+192*3) begin   // 表示エリアなら
-      lb_r_ad = {y[0],x}; // ラインバッファの読み込みのアドレス
-      col = lb_r_rd; // ラインバッファの色を読み込む
-    end else col = 0;
-  end
+  output [8:0] lb_r_ad, input [7:0] lb_r_rd,
+  output [7:0] col);
+  wire view;
+  assign view = 256 <= x1 && x1 < 256*4 && 72 <= y1 && y1 < 72+192*3; // 表示エリアなら
+  assign lb_r_ad = {y[0],x}; // ラインバッファの読み込みのアドレス
+  assign col = view ? lb_r_rd : 0; // ラインバッファの色を読み込む
 endmodule
 
 module LineBuffer(
@@ -178,4 +181,3 @@ module LineBuffer(
   assign lb_r_rd = line[lb_r_ad]; // 読み込み
   always @(posedge clk) if (lb_w_en) line[lb_w_ad] <= lb_w_wd; // 書き込み
 endmodule
-
