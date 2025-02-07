@@ -141,19 +141,20 @@ module LoadFromFlash(
           flash_adr <= 23'h100000;
           b_w_ad <= 0;
       end else if (!flash_adr[16]) begin
+          // タイミングはかなり適当なのでもっと速くできるはず
           counter <= counter + 32'd1;
-          flash_cs <= 1'b0; // trigger flash read after 1s
-          if(counter == 32'd16_0) flash_cs <= 1'b1; // 1秒後に読み込み
-          if(counter == 32'd32_0) begin // 2秒後にアドレスとカウンタを更新してループ
+          flash_cs <= 1'b0; // 基本的には読み込みフラグは立てない
+          if(counter == 32'd16_0) flash_cs <= 1'b1; // 読み込みフラグを立てる
+          if(counter == 32'd32_0) begin // １バイト目読み込み
               b_w_en <= 1;
               b_w_wd <= flash_dout[7:0];
               b_w_ad <= {flash_adr[15:1],1'd1};
           end
-          if(counter == 32'd32_0+1) begin // 2秒後にアドレスとカウンタを更新してループ
+          if(counter == 32'd32_0+1) begin // ２バイト目を読み込み
               b_w_wd <= flash_dout[15:8];
               b_w_ad <= {flash_adr[15:1],1'd0};
           end
-          if(counter == 32'd32_0+2) begin // 2秒後にアドレスとカウンタを更新してループ
+          if(counter == 32'd32_0+2) begin // アドレスとカウンタを更新してループ
               flash_adr <= flash_adr + 23'd2;
               counter <= 32'd0;
               b_w_en <= 0;
