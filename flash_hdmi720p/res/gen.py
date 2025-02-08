@@ -14,3 +14,5 @@ def read_img(filename):
 
 with open("sc8_3.bin","wb") as f:
     f.write(bytes(read_img("sc8_3.png")))
+with open("sc8.bin","wb") as f:
+    f.write(bytes(read_img("sc8.png")))
