@@ -1,0 +1,10 @@
+IO_LOC "clk" 4;
+IO_PORT "clk" IO_TYPE=LVCMOS33 PULL_MODE=UP;
+IO_LOC "rst" 88;     // S1
+IO_PORT "rst" PULL_MODE=NONE;
+
+// HDMI
+IO_LOC "tmdsp[0]" 33,34; IO_PORT "tmdsp[0]" PULL_MODE=NONE;
+IO_LOC "tmdsp[1]" 35,36; IO_PORT "tmdsp[1]" PULL_MODE=NONE;
+IO_LOC "tmdsp[2]" 37,38; IO_PORT "tmdsp[2]" PULL_MODE=NONE;
+IO_LOC "tmdsp[3]" 39,40; IO_PORT "tmdsp[3]" PULL_MODE=NONE;
