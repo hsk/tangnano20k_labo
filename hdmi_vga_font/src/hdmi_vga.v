@@ -59,7 +59,7 @@ endmodule
 module HDMI_rPLL(input clk, output clk5x);
     wire clk10x,clkoutp,clkoutd,clkoutd3,lock;
     rPLL#(
-        .FCLKIN("25"),
+        .FCLKIN("25.2"),
         .DYN_IDIV_SEL("false"),  .IDIV_SEL(0),
         .DYN_FBDIV_SEL("false"), .FBDIV_SEL(9),
         .DYN_ODIV_SEL("false"),  .ODIV_SEL(2),
