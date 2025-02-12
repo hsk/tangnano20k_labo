@@ -1,0 +1,27 @@
+clean:
+	cd bg1; make clean
+	cd bg2_uart_rx; make clean
+	cd bg3_uart_cobs; make clean
+	cd flash; make clean
+	cd flash_hdmi720p; make clean
+	cd frmbuf_16; make clean
+	cd frmbuf_720p_linebuf; make clean
+	cd frmbuf_720p_sdram; make clean
+	cd frmbuf_720p_sdram2; make clean
+	cd frmbuf_ham6; make clean
+	cd frmbuf_p16; make clean
+	cd frmbuf_p64; make clean
+	cd frmbuf_uart_cobs; make clean
+	cd hdmi; make clean
+	cd hdmi_480p; make clean
+	cd hdmi_720p; make clean
+	cd hdmi_vga; make clean
+	cd hdmi_vga_font; make clean
+	cd led; make clean
+	cd led_ws2812; make clean
+	cd led_ws2812_off; make clean
+	cd sp; make clean
+	cd sp1; make clean
+	cd stack_utx1; make clean
+	cd ym2149; make clean
+	cd ym2149_3op; make clean
