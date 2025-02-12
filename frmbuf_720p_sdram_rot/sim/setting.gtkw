@@ -1,0 +1,89 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Mon Feb  3 13:26:53 2025
+[*]
+[dumpfile] "tb.vcd"
+[dumpfile_mtime] "Mon Feb  3 13:26:22 2025"
+[dumpfile_size] 1084457
+[savefile] "setting.gtkw"
+[timestart] 104084300
+[size] 1712 1040
+[pos] 0 72
+*-16.639965 104397837 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[markername] AA
+[markername] BB
+[markername] CC
+[markername] DD
+[markername] EE
+[markername] FF
+[markername] GG
+[markername] HH
+[markername] II
+[markername] JJ
+[markername] KK
+[markername] LL
+[markername] MM
+[markername] NN
+[markername] OO
+[markername] PP
+[markername] QQ
+[markername] RR
+[markername] SS
+[markername] TT
+[markername] UU
+[markername] VV
+[markername] WW
+[markername] XX
+[markername] YY
+[markername] ZZ
+[treeopen] tb.
+[sst_width] 240
+[signals_width] 228
+[sst_expanded] 1
+[sst_vpaned_height] 313
+@28
+tb.clk
+[color] 1
+tb.clk2
+tb.reset_n
+@22
+tb.IO_sdram_dq[31:0]
+@28
+tb.O_sdram_ba[1:0]
+tb.O_sdram_cke
+tb.O_sdram_ras_n
+tb.O_sdram_cas_n
+tb.O_sdram_wen_n
+tb.sdram_init_busy
+[color] 1
+tb.sdram_busy
+@820
+[color] 2
+tb.dcmd[0:127]
+@22
+tb.O_sdram_addr[10:0]
+@28
+tb.O_sdram_cs_n
+@22
+tb.O_sdram_dqm[3:0]
+@820
+[color] 1
+tb.dbg[0:127]
+@821
+[color] 1
+tb.disp[0:127]
+@22
+tb.t[31:0]
+tb.address[22:0]
+@28
+tb.wr_n
+@22
+tb.wdata[7:0]
+@28
+tb.rdata_en
+tb.reset_n
+@22
+[color] 1
+tb.rdata[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

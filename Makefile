@@ -7,6 +7,7 @@ clean:
 	cd frmbuf_16; make clean
 	cd frmbuf_720p_linebuf; make clean
 	cd frmbuf_720p_sdram; make clean
+	cd frmbuf_720p_sdram_rot; make clean
 	cd frmbuf_720p_sdram2; make clean
 	cd frmbuf_ham6; make clean
 	cd frmbuf_p16; make clean
