@@ -2,6 +2,10 @@
 
 Sipeed Tang nano 20Kでデュアルショックのジョイスティック入力の情報をHDMIに出力します。
 
+
+https://github.com/user-attachments/assets/a4b409d2-46c2-40ec-9a4e-7d124fbb7a13
+
+
 cst ファイルに以下のように定義し
 
 ```verilog
