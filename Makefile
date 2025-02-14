@@ -18,6 +18,8 @@ clean:
 	cd hdmi_720p; make clean
 	cd hdmi_vga; make clean
 	cd hdmi_vga_font; make clean
+	cd joystick; make clean
+	cd joystick_analog; make clean
 	cd led; make clean
 	cd led_ws2812; make clean
 	cd led_ws2812_off; make clean
