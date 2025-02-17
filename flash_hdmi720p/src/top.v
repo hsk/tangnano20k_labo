@@ -2,11 +2,10 @@ import configPackage::*;
 
 module top(
   input clk, I_reset, s1,
-  output mspi_cs, mspi_clk, inout mspi_di, mspi_hold, mspi_wp, mspi_do,
+  output mspio[2], inout mspid[2], mspi_wp, mspi_hold,
 	output tmds_clk_n, tmds_clk_p, [2:0] tmds_d_n, [2:0] tmds_d_p
 );
-  assign mspi_hold = 1'b1;
-  assign mspi_wp   = 1'b0;
+  assign mspi_wp = 1'b0; assign mspi_hold = 1'b1;
   wire clk_pixel;         // HDMI or VGA pixel clock           27MHz for 480p, 74.25MHz for 720p
   wire clk_hdmi_serial;   // HDMI serial clock (5 x clk_pixel) 135MHz for 480p, 371.25MHz for 720p
   wire clk_audio;         // HDMI audio clock 32kHz
@@ -17,7 +16,7 @@ module top(
   wire [VIDEO_X_BITWIDTH-1:0] x, frameWidth, screenWidth;
   wire [VIDEO_Y_BITWIDTH-1:0] y, frameHeight, screenHeight;
   gen_video video(.clk(clk_pixel), .rst(rst_n),
-    .mspi_cs(mspi_cs), .mspi_clk(mspi_clk), .mspi_di(mspi_di), .mspi_do(mspi_do),
+    .mspio(mspio), .mspid(mspid),
     .x1(x), .y1(y), .rgb(rgb));
 
   wire [AUDIO_BIT_WIDTH-1:0] sample_gen, sample;

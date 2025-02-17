@@ -41,12 +41,12 @@ module dualshock_controller(
    output O_psTXD,         //  psTXD OUT               コントローラと繋がる出力
    input  I_psRXD,         //  psRXD IN                コントローラと繋がる入力
    // ボタンの状態
-   output [7:0]O_RXD_1,    //  RX DATA 1 (8bit) これと
-   output [7:0]O_RXD_2,    //  RX DATA 2 (8bit) これしか見てない
-   output [7:0]O_RXD_3,    //  RX DATA 3 (8bit) // 見てないが見て見たい この辺にx、yが入ってそう。
-   output [7:0]O_RXD_4,    //  RX DATA 4 (8bit) // 見てないが見て見たい
-   output [7:0]O_RXD_5,    //  RX DATA 5 (8bit) // 見てないが見て見たい
-   output [7:0]O_RXD_6,    //  RX DATA 6 (8bit) // 見てないが見て見たい
+   output reg[7:0]O_RXD_1, //  RX DATA 1 (8bit) これと
+   output reg[7:0]O_RXD_2, //  RX DATA 2 (8bit) これしか見てない
+   output reg[7:0]O_RXD_3, //  RX DATA 3 (8bit) // 見てないが見て見たい この辺にx、yが入ってそう。
+   output reg[7:0]O_RXD_4, //  RX DATA 4 (8bit) // 見てないが見て見たい
+   output reg[7:0]O_RXD_5, //  RX DATA 5 (8bit) // 見てないが見て見たい
+   output reg[7:0]O_RXD_6, //  RX DATA 6 (8bit) // 見てないが見て見たい
    // 設定
    input I_CONF_SW,       //  Dualshook Config  ACTIVE-HI
    input I_MODE_SW,       //  Dualshook Mode Set DEGITAL PAD 0: ANALOG PAD 1:
@@ -84,7 +84,6 @@ module dualshock_controller(
    ps_rxd rxd(.I_CLK(O_psCLK), .I_RSTn(I_RSTn),
       .I_WT(W_RXWT), .I_psRXD(I_psRXD), .O_RXD_DAT(W_RXD_DAT));
    //----------   RXD DATA DEC  ----------------------------------------
-   reg [7:0] O_RXD_1, O_RXD_2, O_RXD_3, O_RXD_4, O_RXD_5, O_RXD_6;
    reg W_rxd_mask;
    always@(posedge W_scan_seq_pls)  W_rxd_mask <= ~W_conf_ent;
    always@(negedge W_RXWT) if (W_rxd_mask) case(W_byte_cnt)
@@ -372,38 +371,18 @@ module ps_pls_gan(
    assign O_TXEN  = ~psSEL&(~psCLK_gate);
 endmodule
 
-module ps_rxd(
-    input	I_CLK,I_RSTn,I_WT,
-    input	I_psRXD,
-    output	reg [7:0]O_RXD_DAT
-);
+module ps_rxd(input I_CLK, I_RSTn, I_WT, I_psRXD, output reg [7:0]O_RXD_DAT);
     reg     [7:0]sp;
     always@(posedge I_CLK or negedge I_RSTn)
-        if(! I_RSTn) sp <= 1;
-        else         sp <= { I_psRXD, sp[7:1]};
+        sp <= !I_RSTn ? 1 : {I_psRXD, sp[7:1]};
     always@(posedge I_WT or negedge I_RSTn)
-        if(! I_RSTn) O_RXD_DAT <= 1;
-        else         O_RXD_DAT <= sp;
+        O_RXD_DAT <= !I_RSTn ? 1 : sp;
 endmodule
 
-module ps_txd(
-    input	I_CLK,I_RSTn,
-    input	I_WT,I_EN,
-    input	[7:0]I_TXD_DAT,
-    output	reg O_psTXD
-);
+module ps_txd(input I_CLK, I_RSTn, I_WT, I_EN, [7:0]I_TXD_DAT, output reg O_psTXD);
     reg     [7:0]ps;
     always@(negedge I_CLK or negedge I_RSTn)
-        if(! I_RSTn) begin 
-            O_psTXD <= 1;
-            ps      <= 0;
-        end else if(I_WT) begin
-            ps  <= I_TXD_DAT;
-        end else if(I_EN) begin
-            O_psTXD <= ps[0];
-            ps      <= {1'b1, ps[7:1]};
-        end else begin
-            O_psTXD <= 1'd1;
-            ps  <= ps;
-        end
+        ps <= !I_RSTn ? 0 : I_WT ? I_TXD_DAT : I_EN ? {1'b1, ps[7:1]} : ps;
+    always@(negedge I_CLK or negedge I_RSTn)
+        O_psTXD <= !I_RSTn ? 1 : I_WT ? O_psTXD : I_EN ?ps[0] : 1'd1;
 endmodule

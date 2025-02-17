@@ -4,6 +4,7 @@ clean:
 	cd bg3_uart_cobs; make clean
 	cd flash; make clean
 	cd flash_hdmi720p; make clean
+	cd flash_hdmi720p_realtime; make clean
 	cd frmbuf_16; make clean
 	cd frmbuf_720p_linebuf; make clean
 	cd frmbuf_720p_sdram; make clean
